@@ -1,0 +1,27 @@
+# syntax=docker/dockerfile:experimental
+ARG SBCL_VERSION=2.0.9
+FROM fukamachi/sbcl:${SBCL_VERSION}
+ARG QLOT_VERSION=0.10.7
+ENV PATH /root/go/bin:${PATH}
+
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt set -x; \
+  apt-get update && apt-get -y install --no-install-recommends \
+    git \
+    golang \
+    libev-dev \
+    gcc \
+    libc6-dev && \
+  ros install fukamachi/qlot/${QLOT_VERSION} && \
+  go get github.com/lestrrat-go/server-starter/cmd/start_server
+
+WORKDIR /app
+RUN ros -e '(ql:quickload :qlot/distify)'
+COPY qlfile /app
+COPY qlfile.lock /app
+
+RUN qlot install --no-deps
+
+COPY docker/entrypoint.sh /app/docker/entrypoint.sh
+
+ENTRYPOINT ["qlot", "exec"]
+CMD ["/app/docker/entrypoint.sh"]

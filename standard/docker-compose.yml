@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: docker-cl-example-standard
+    build:
+      dockerfile: docker/Dockerfile-app
+      context: .
+    ports:
+      - "5000:5000"
+      - "4006:4006"
+    tty: true
+    environment:
+      PORT: 5000
+      SWANK_PORT: 4006
+    depends_on:
+      - maindb
+    volumes:
+      - .:/app:ro
+      - /app/.qlot
+  maindb:
+    container_name: docker-cl-example-standard-maindb
+    image: postgres:12.5
+    environment:
+      POSTGRES_USER: docker-cl-example
+      POSTGRES_PASSWORD: docker-cl-example
+      POSTGRES_DB: docker-cl-example
+    ports:
+      - "15432:5432"
+    volumes:
+      - maindb_data:/var/lib/postgresql/data
+
+volumes:
+  maindb_data:
+    name: docker_cl_example_standard_maindb_data
