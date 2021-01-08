@@ -18,3 +18,9 @@ This repository includes 2 types of projects.
     * Workflow file is [here](./.github/workflows/build-production-image.yml).
   * Publish production Docker image to GitHub Container Registry
     * [package/docker-cl-example-standard](https://github.com/users/fukamachi/packages/container/package/docker-cl-example-standard)
+
+## Requirements
+
+* Docker Engine 19.03 or above
+* Docker Compose 1.27 or above
+  * (macOS) No need to install since it's included in Docker Desktop for Mac

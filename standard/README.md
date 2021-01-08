@@ -7,12 +7,6 @@ This project shows how to use Docker with the following features:
 * RDBMS
 * Swank server
 
-## Requirements
-
-* Docker Engine 19.03 or above
-* Docker Compose 1.27 or above
-  * (macOS) No need to install since it's included in Docker Desktop for Mac
-
 ## Build
 
 ```
