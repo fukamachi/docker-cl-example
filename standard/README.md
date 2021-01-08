@@ -26,8 +26,25 @@ $ make db
 $ make up
 ```
 
-## License
+## Development
 
-Copyright (c) 2021 Eitaro Fukamachi
+### Connecting to Swank server in the container from the host machine
 
-Licensed under the MIT License.
+For Emacs/SLIME users, run `M-x slime-connect RET localhost RET 4006 RET` on your Emacs.
+For other editor fans, follow its documentation and connect to `localhost:4006`.
+
+### Restarting a web server without restarting a container
+
+```
+$ make reload
+```
+
+### Adding a dependency
+
+1. Add a line to `qlfile` (See [Qlot documentation](https://github.com/fukamachi/qlot))
+2. Run `make qlot-install`
+
+## Updating a dependency
+
+1. Change lines in `qlfile`
+2. Run `make qlot-update`

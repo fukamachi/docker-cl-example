@@ -23,8 +23,20 @@ $ make
 $ make up
 ```
 
-## License
+## Development
 
-Copyright (c) 2021 Eitaro Fukamachi
+### Restarting a web server without restarting a container
 
-Licensed under the MIT License.
+```
+$ make reload
+```
+
+### Adding a dependency
+
+1. Add a line to `qlfile` (See [Qlot documentation](https://github.com/fukamachi/qlot))
+2. Run `make qlot-install`
+
+## Updating a dependency
+
+1. Change lines in `qlfile`
+2. Run `make qlot-update`
