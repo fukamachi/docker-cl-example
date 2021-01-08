@@ -1,8 +1,10 @@
 all: build
 
-.PHONY: build
+.PHONY: build build_production
 build:
 	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build
+build_production:
+	DOCKER_BUILDKIT=1 docker build -t ghcr.io/fukamachi/docker-cl-example-standard -f docker/Dockerfile-app-production .
 
 .PHONY: db
 db:

@@ -1,0 +1,24 @@
+# syntax=docker/dockerfile:experimental
+ARG SBCL_VERSION=2.0.9
+FROM fukamachi/sbcl:${SBCL_VERSION}
+ARG QLOT_VERSION=0.10.7
+ENV APP_ENV production
+
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt set -x; \
+  apt-get update && apt-get -y install --no-install-recommends \
+    git \
+    libev-dev \
+    gcc \
+    libc6-dev && \
+  ros install fukamachi/qlot/${QLOT_VERSION}
+
+WORKDIR /app
+RUN ros -e '(ql:quickload :qlot/distify)'
+COPY . /app
+
+RUN qlot install
+RUN qlot exec ros -e "(ql:quickload :docker-cl-example)"
+
+EXPOSE 5000
+ENTRYPOINT [".qlot/bin/clackup", "-s", "docker-cl-example", "app.lisp", "--debug", "nil", "--server", "woo", "--port", "5000"]
+CMD ["--address", "0.0.0.0"]
