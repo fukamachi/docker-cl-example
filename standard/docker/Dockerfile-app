@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:experimental
-ARG SBCL_VERSION=2.0.9
+ARG SBCL_VERSION=2.5.1
 FROM fukamachi/sbcl:${SBCL_VERSION}
-ARG QLOT_VERSION=0.10.7
+ARG QLOT_VERSION=1.6.0
 ENV APP_ENV local
 ENV PATH /root/go/bin:${PATH}
 
@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
     gcc \
     libc6-dev && \
   ros install fukamachi/qlot/${QLOT_VERSION} && \
-  go get github.com/lestrrat-go/server-starter/cmd/start_server
+  go install github.com/lestrrat-go/server-starter/cmd/start_server@0.0.2
 
 WORKDIR /app
 RUN ros -e '(ql:quickload :qlot/distify)'
